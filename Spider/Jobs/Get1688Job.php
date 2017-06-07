@@ -1,15 +1,17 @@
 <?php
 
+namespace App\Spider\Jobs;
+
 class Get1688Job
 {
-    public name = 'get1688';
-    public allowed_domains = ['1688.com'];
-    public start_urls = [
+    public $name = 'get1688';
+    public $allowed_domains = ['1688.com'];
+    public $start_urls = [
         'https://mizi512.1688.com/page/offerlist.htm',
         'https://detail.1688.com/offer/536452856256.html',
     ];
 
-    public config = [
+    public $config = [
         'depth' => 8,       // 爬行深度
         'certificate' => '', // SSL证书存放的位置
         'robotstxt_obey' => false,   // 爬行谁会在乎robots.txt
@@ -21,7 +23,7 @@ class Get1688Job
         // '正则' => 'function'
     ];
 
-    public rules = [
+    public $rules = [
         // url 默认交给parse
         // 某些url交给parse2，parse3（例如：详细页交给parse_detail）
         // '正则' => 'function:parse_detail'

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Spider;
+
 class Engine
 {
     public $job_middlewares = [
@@ -26,8 +28,14 @@ class Engine
         'scheduler_middleware_05' => 5,
     ];
 
-    public function start($job = '')
+    public function start($job = null)
     {
+        if (!$job) {
+            die('爬行作业为空，请检查后再试！');
+        }
+
+        var_dump($job);
+
         // 取得Job列表
         // 判断job是否在列表中
         // 在的话，把job交给scheduler(scheduler把job里的url变成一个个的request，放入队列，交给下载器)
