@@ -30,8 +30,8 @@ class Crawl extends Command
     {
         echo sprintf("爬行作业：开始 %s\n", date('Y-m-d H:i:s'));
 
-        // 获取job列表
-        $job_list = [];
+        // 检查job名
+        $job = null;
 
         $filenames = scandir(app_path('Spider/Jobs'));
         foreach ($filenames as $idx => $filename) {
@@ -39,21 +39,27 @@ class Crawl extends Command
                 continue;
             }
 
-            $job_name = strtolower(strstr($filename, 'Job', true));
-            $job_list[$job_name] = strstr($filename, '.', true);
+            try {
+                $job_class = '\App\Spider\Jobs\\' . strstr($filename, '.', true);
+                $job = new $job_class;
+
+                if ($job->name == $this->argument('job')) {
+                    break;
+                }
+            } catch(\Exception $e) {
+                echo sprintf("爬行作业：错误 %s\n", $e->getMessage());
+            }
+
+            $job = null;
         }
 
         // 爬行作业存在，则启动引擎
-        if ($this->argument('job') && isset($job_list[$this->argument('job')])) {
-            $job_class = '\App\Spider\Jobs\\' . $job_list[$this->argument('job')];
-            $job = new $job_class;
-
+        if ($job) {
             $engine = new Engine();
             $engine->start($job);
 
         // 否则提示错误
         } else {
-            // 否则命令结束
             echo sprintf("爬行作业：错误 %s 不存在，请检查后再试！\n", $this->argument('job'));
         }
 

@@ -41,4 +41,10 @@ class Engine
         // 在的话，把job交给scheduler(scheduler把job里的url变成一个个的request，放入队列，交给下载器)
         // 不在就报错
     }
+
+    public function stop($job_name = null)
+    {
+        // 去redis里，找到任务的url栈，或者改一下任务状态
+        // 让采集热停止下来，把url栈备份一下
+    }
 }
