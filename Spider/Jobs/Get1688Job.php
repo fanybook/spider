@@ -13,7 +13,7 @@ class Get1688Job
 
     public $config = [
         'depth' => 8,       // 爬行深度
-        'certificate' => '', // SSL证书存放的位置
+        'certificate.cacert' => '', // SSL证书存放的位置
         'robotstxt_obey' => false,   // 爬行谁会在乎robots.txt
         'download_delay' => 3,      // 下载间隔，主要是防反爬
         'downloader_middlewares' => [
